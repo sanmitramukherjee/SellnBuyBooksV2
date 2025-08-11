@@ -170,7 +170,7 @@
   document.addEventListener('DOMContentLoaded', async () => {
     // Fetch recently listed books
     try {
-      const res = await fetch("http://localhost:5000/api/books/recent");
+      const res = await fetch("/api/books/recent");
       const books = await res.json();
       const container = document.getElementById('recentBooks');
       container.innerHTML = '';
@@ -194,7 +194,7 @@
 
     // Fetch stats
     try {
-      const statsRes = await fetch("http://localhost:5000/api/stats");
+      const statsRes = await fetch("/api/stats");
       const stats = await statsRes.json();
       document.getElementById('statsListed').textContent = stats.listed || 0;
       document.getElementById('statsBought').textContent = stats.bought || 0;

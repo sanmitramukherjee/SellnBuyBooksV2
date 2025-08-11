@@ -157,7 +157,7 @@
 
     async function handleBuy(bookId) {
       try {
-        const res = await fetch('http://localhost:5000/api/purchase', {
+        const res = await fetch('/api/purchase', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -175,7 +175,7 @@
 
     async function loadBooks() {
       try {
-        const res = await fetch('http://localhost:5000/api/books', {
+        const res = await fetch('/api/books', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const books = await res.json();

@@ -137,7 +137,7 @@
     <script>
     async function loadUserData() {
         try {
-            const res = await fetch("http://localhost:5000/api/users/me", {
+            const res = await fetch("/api/users/me", {
                 headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
             });
             if (!res.ok) throw new Error("Failed to load user data");
@@ -186,7 +186,7 @@
     document.getElementById("editForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:5000/api/users/me", {
+            const res = await fetch("/api/users/me", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -34,10 +34,13 @@ const upload = multer({ storage });
 
 // Middleware
 app.use(cors({
-    origin: process.env.CLIENT_URL || '*', // Allow your deployed frontend
+    origin: process.env.CLIENT_URL || '*',
     credentials: true
 }));
 app.use(express.json());
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Make uploads folder public
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -56,7 +59,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/purchase', purchaseRoutes);
 app.use('/api', publicRoutes);
 
-// ✅ Direct /me endpoint for user info
+// ✅ Direct /me endpoint
 app.get('/api/users/me', authMiddleware, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -118,16 +121,6 @@ app.get('/api/books', async (req, res) => {
     }
 });
 
-// ✅ Serve frontend (only in production)
-if (process.env.NODE_ENV === 'production') {
-    const frontendPath = path.join(__dirname, '../frontend'); // adjust if needed
-    app.use(express.static(frontendPath));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendPath, 'index.html'));
-    });
-}
-
 // Start server
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGO_URI, {
@@ -136,6 +129,5 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
 .catch(err => console.error(err));
-
 
 

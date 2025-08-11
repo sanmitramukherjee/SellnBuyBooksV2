@@ -110,7 +110,7 @@
 
       // Load username/email in navbar
       try {
-        const userRes = await fetch("http://localhost:5000/api/users/me", {
+        const userRes = await fetch("/api/users/me", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         if (userRes.ok) {
@@ -123,7 +123,7 @@
 
       // Load purchase history
       try {
-        const res = await fetch("http://localhost:5000/api/purchase/history", {
+        const res = await fetch("/api/purchase/history", {
           headers: { "Authorization": `Bearer ${token}` }
         });
 
