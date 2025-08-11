@@ -41,8 +41,8 @@
 const express = require('express');
 const router = express.Router();
 const authenticateUser = require('../middleware/auth');
-const Purchase = require('../models/purchase');
-const Book = require('../models/book');
+const Purchase = require('../models/Purchase');
+const Book = require('../models/Book');
 
 // POST: Create a new purchase
 router.post('/', authenticateUser, async (req, res) => {

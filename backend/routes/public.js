@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/Book');
-const Purchase = require('../models/purchase');
+const Purchase = require('../models/Purchase');
 const User = require('../models/User');
 
 // GET /api/books/recent
