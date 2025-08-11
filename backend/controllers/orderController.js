@@ -19,7 +19,7 @@
 //         res.status(500).json({ error: err.message });
 //     }
 // };
-const Order = require('../models/order');
+const Order = require('../models/Order');
 
 exports.createOrder = async (req, res) => {
   try {
