@@ -157,7 +157,6 @@
     formData.append('info', form.additionalInfo.value);
     formData.append('phone', form.phone.value);
     formData.append('price', form.price.value);
-    formData.append('seller', localStorage.getItem('userId'));
 
     // Image upload (multer expects this)
     if (form.image && form.image.files.length > 0) {
