@@ -88,9 +88,12 @@ app.put('/api/users/me', authMiddleware, async (req, res) => {
 });
 
 // ✅ Book upload route
-app.post('/api/books', upload.single('image'), async (req, res) => {
+app.post('/api/books', authMiddleware, upload.single('image'), async (req, res) => {
     try {
+        console.log("Decoded user in /api/books:", req.user);
+
         const { title, description, price, author, condition, purchaseDate, info, phone } = req.body;
+
         const newBook = new Book({
             title,
             description,
@@ -101,12 +104,13 @@ app.post('/api/books', upload.single('image'), async (req, res) => {
             info,
             phone,
             image: req.file ? `/uploads/${req.file.filename}` : null,
-            seller: req.user.id
+            seller: req.user.id   // ✅ now safe, req.user is defined
         });
+
         await newBook.save();
         res.status(201).json({ message: 'Book added successfully', book: newBook });
     } catch (err) {
-        console.error(err);
+        console.error("Error in /api/books:", err);
         res.status(500).json({ error: 'Error adding book' });
     }
 });
