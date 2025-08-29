@@ -100,6 +100,7 @@ app.post('/api/books', upload.single('image'), async (req, res) => {
             purchaseDate,
             info,
             phone,
+            seller: req.user ? req.user.id : req.body.seller, 
             image: req.file ? `/uploads/${req.file.filename}` : null
         });
         await newBook.save();
