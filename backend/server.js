@@ -128,7 +128,7 @@ app.get('/api/books', async (req, res) => {
 
 // ✅ Serve login page by default
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'loginpage.html'));
+    res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
 });
 
 // Start server

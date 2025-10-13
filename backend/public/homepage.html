@@ -26,6 +26,80 @@
       object-fit: cover;
     }
   </style>
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    const navbar = document.querySelector('.navbar-nav');
+    const personalDropdown = document.querySelector('.nav-item.dropdown');
+    const logoutLink = document.querySelector('.dropdown-item.text-bg-danger');
+    const loginButton = document.querySelector('.btn-warning'); // your current "power" button
+
+    // If user is logged in
+    if (token) {
+      // Replace login power button with nothing (or hide it)
+      if (loginButton) loginButton.style.display = 'none';
+      if (personalDropdown) personalDropdown.style.display = 'block';
+    } else {
+      // Hide personal dropdown and show login button
+      if (personalDropdown) personalDropdown.style.display = 'none';
+      if (loginButton) {
+        loginButton.style.display = 'inline-block';
+        loginButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M6.146 11.354a.5.5 0 0 0 .708 0L10 8.207l-3.146-3.147a.5.5 0 0 0-.708.708L8.793 8l-2.647 2.646a.5.5 0 0 0 0 .708z"/>
+            <path fill-rule="evenodd" d="M13.5 15A1.5 1.5 0 0 0 15 13.5v-11A1.5 1.5 0 0 0 13.5 1h-7A1.5 1.5 0 0 0 5 2.5V5h1V2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5V11H5v2.5A1.5 1.5 0 0 0 6.5 15h7z"/>
+          </svg>
+          Login / Register
+        `;
+        loginButton.onclick = () => (window.location.href = 'loginpage.html');
+      }
+    }
+
+    // Logout functionality
+    if (logoutLink) {
+      logoutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        window.location.href = 'homepage.html';
+      });
+    }
+
+    // Existing functionality (recent books + stats)
+    try {
+      const res = await fetch("/api/books/recent");
+      const books = await res.json();
+      const container = document.getElementById('recentBooks');
+      container.innerHTML = '';
+      books.forEach(book => {
+        container.innerHTML += `
+          <div class="col-md-3">
+            <div class="card book-card shadow-sm">
+              <img src="${book.cover || 'https://via.placeholder.com/150'}" class="card-img-top" alt="${book.title}">
+              <div class="card-body">
+                <h6 class="card-title">${book.title}</h6>
+                <p class="text-muted small">${book.author || 'Unknown Author'}</p>
+                <a href="buy.html" class="btn btn-sm btn-success">View</a>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    } catch (err) {
+      console.error("Failed to load recent books", err);
+    }
+
+    try {
+      const statsRes = await fetch("/api/stats");
+      const stats = await statsRes.json();
+      document.getElementById('statsListed').textContent = stats.listed || 0;
+      document.getElementById('statsBought').textContent = stats.bought || 0;
+      document.getElementById('statsUsers').textContent = stats.users || 0;
+    } catch (err) {
+      console.error("Failed to load stats", err);
+    }
+  });
+</script>
 </head>
 <body>
 

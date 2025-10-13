@@ -1,5 +1,5 @@
 <!-- login.html -->
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<!-- Register Modal -->
+<!-- Register Modal 
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form id="register-form" class="modal-content">
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<!-- Scripts -->
+<!-- Scripts 
 <script>
 const API_BASE = '/api';
 
@@ -178,5 +178,179 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SellyourBooks | Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
+</head>
+<body class="bg-light">
 
+<script>
+  // ✅ Redirect if already logged in
+  const existingToken = localStorage.getItem('token');
+  if (existingToken) {
+    window.location.href = 'homepage.html';
+  }
+</script>
 
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow-lg mt-5">
+        <div class="card-header text-bg-primary text-center">User Login</div>
+        <div class="card-body">
+          <form id="login-form">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="login_email" name="email" placeholder="email@example.com" required autofocus />
+              <label for="login_email">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="login_password" name="password" placeholder="***" required />
+              <label for="login_password">Password</label>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="" id="remember_me" />
+              <label class="form-check-label" for="remember_me">Remember me</label>
+            </div>
+            <div class="d-grid mb-2">
+              <button class="btn btn-success" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                        d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                  <path fill-rule="evenodd"
+                        d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+                Login as User
+              </button>
+            </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#registerModal">
+                Don't have an account? Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="register-form" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="username" placeholder="Username" required />
+          <label>Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" name="email" placeholder="Email" required />
+          <label>Email</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" placeholder="Password" required />
+          <label>Password</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+const API_BASE = '/api';
+
+// ✅ LOGIN
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('login_email').value.trim();
+  const password = document.getElementById('login_password').value.trim();
+
+  if (!email || !password) {
+    alert('Please enter both email and password.');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    console.log('Login response:', data);
+
+    if (res.ok && data.token) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.user?.id);
+      localStorage.setItem('username', data.user?.username);
+
+      alert('Login successful! Redirecting...');
+      setTimeout(() => {
+        window.location.href = 'homepage.html';
+      }, 1000);
+    } else {
+      alert(data.error || data.message || 'Login failed.');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Something went wrong during login.');
+  }
+});
+
+// ✅ REGISTER
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const username = form.username.value.trim();
+  const email = form.email.value.trim();
+  const password = form.password.value.trim();
+
+  if (!username || !email || !password) {
+    alert('Please fill in all fields.');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const data = await res.json();
+    console.log('Register response:', data);
+
+    if (res.status === 201) {
+      alert('Registration successful! You can now log in.');
+      bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+    } else {
+      alert(data.message || 'Registration failed.');
+    }
+  } catch (err) {
+    console.error('Register error:', err);
+    alert('Something went wrong during registration.');
+  }
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
