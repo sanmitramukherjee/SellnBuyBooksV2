@@ -1,7 +1,8 @@
 # 📚 Sell N Buy Books
 
 ![Website Status](https://img.shields.io/badge/status-live-brightgreen)
-![Python](https://img.shields.io/badge/python-3.11-blue)
+![Node.js](https://img.shields.io/badge/node.js-16-green)
+![MongoDB](https://img.shields.io/badge/mongodb-5.0-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 A modern **web application for buying and selling second-hand books**. Users can register, list books, browse available books, purchase them, and manage their account seamlessly. Perfect for students and book enthusiasts!
