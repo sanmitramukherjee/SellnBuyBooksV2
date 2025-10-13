@@ -27,13 +27,13 @@ Check out the live application here: [SellNBuyBooks](https://sellnbuybooks.onren
 
 ## 🖼 Screenshots
 
-![Homepage](./public/screenshots/homepage.png)  
+![Homepage](./backend/public/screenshots/homepage.png)  
 *Homepage showcasing featured books.*
 
-![Add Book](./public/screenshots/add-book.png)  
+![Add Book](./backend/public/screenshots/add-book.png)  
 *Form for adding new book listings.*
 
-![Buy Books](./public/screenshots/buy-books.png)  
+![Buy Books](./backend/public/screenshots/buy-books.png)  
 *Page which displays the listed books. Available to buy.*
 
 ---
