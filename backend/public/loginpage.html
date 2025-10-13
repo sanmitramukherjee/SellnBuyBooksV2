@@ -301,7 +301,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       localStorage.setItem('userId', data.user?.id);
       localStorage.setItem('username', data.user?.username);
 
-      alert('Login successful! Redirecting...');
+      // alert('Login successful! Redirecting...');
       setTimeout(() => {
         window.location.href = 'homepage.html';
       }, 1000);
