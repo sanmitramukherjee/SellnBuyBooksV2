@@ -1,70 +1,170 @@
-# 📚 Sell N Buy Books
+# SellnBuyBooks - Modern Book Marketplace
 
-![Website Status](https://img.shields.io/badge/status-live-brightgreen)
-![Node.js](https://img.shields.io/badge/node.js-16-green)
-![MongoDB](https://img.shields.io/badge/mongodb-5.0-green)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
+A modern, full-stack book marketplace application built with React + Vite frontend and Node.js + Express backend.
 
-A modern **web application for buying and selling second-hand books**. Users can register, list books, browse available books, purchase them, and manage their account seamlessly. Perfect for students and book enthusiasts!
+## 🚀 Features
 
----
+- ✅ **Modern UI** - Dark theme with glassmorphism, gradients, and smooth animations
+- ✅ **Image Upload** - Upload book images with live preview
+- ✅ **Complete Book Details** - Title, author, description, condition, price, and more
+- ✅ **Dummy Payment** - 3-second payment simulation for purchases
+- ✅ **Purchase History** - Track all your book purchases
+- ✅ **Sold Status** - Books marked as sold after purchase
+- ✅ **Authentication** - Secure login and registration
+- ✅ **Responsive Design** - Works on desktop, tablet, and mobile
 
-## 🌐 Live Demo
+## 📋 Prerequisites
 
-Check out the live application here: [SellNBuyBooks](https://sellnbuybooks.onrender.com/)
+- Node.js (v16 or higher)
+- MongoDB (local or Atlas)
+- PowerShell execution policy set to allow scripts
 
----
+## 🚀 Deployment
 
-## 🎯 Features
+This project uses **two separate deployments**:
+- **Backend**: Render (Node.js API)
+- **Frontend**: Vercel (React + Vite)
 
-- ✅ **User Authentication:** Secure registration and login system  
-- ✅ **Book Listings:** Add, edit, and delete your book listings  
-- ✅ **Search and Browse:** Search books by title, author, or category  
-- ✅ **Purchase & Sales History:** Track all your transactions  
-- ✅ **Account Management:** View and update personal info  
-- ✅ **Responsive Design:** Works on desktop and mobile devices  
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
----
+### Quick Deploy:
+1. **Backend** (Render):
+   - Root Directory: `backend`
+   - Environment: `MONGO_URI`, `JWT_SECRET`, `PORT`, `CLIENT_URL`
 
-## 🖼 Screenshots
+2. **Frontend** (Vercel):
+   - Root Directory: `frontend`
+   - Environment: `VITE_API_URL`
+   - Build: `npm run build`
+   - Output: `dist`
 
-![Homepage](./backend/public/screenshots/homepage.png)  
-*Homepage showcasing featured books.*
+## 🛠️ Setup Instructions
 
-![Add Book](./backend/public/screenshots/add-book.png)  
-*Form for adding new book listings.*
+### 1. Enable PowerShell Scripts (Required for Windows)
 
-![Buy Books](./backend/public/screenshots/buy-books.png)  
-*Page which displays the listed books. Available to buy.*
+Run PowerShell as Administrator and execute:
 
----
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
-## 🛠 Technology Stack
+### 2. Backend Setup
 
-- **Frontend:** HTML, CSS, JavaScript  
-- **Backend:** JavaScript *(Node)*
-- **Database:** MongoDB  
-- **Authentication:** Secure password hashing & session management  
+```bash
+cd backend
+npm install
+```
 
----
+Create a `.env` file in the `backend` directory:
 
-## 🚀 Future Improvements
+```env
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+JWT_SECRET=your_secret_key_here
+CLIENT_URL=http://localhost:3000
+```
 
-- 🔹 Payment gateway integration for secure online transactions  
-- 🔹 Ratings and reviews for buyers and sellers  
-- 🔹 Real-time chat between buyers and sellers  
-- 🔹 Advanced search and filtering for easier navigation  
-- 🔹 Optimized deployment for better performance and scalability  
+Start the backend server:
 
----
+```bash
+npm start
+```
 
-## 📄 License
+### 3. Frontend Setup
 
-This project is licensed under the MIT License.
+```bash
+cd frontend
+npm install
+```
 
----
+Start the development server:
 
-## 💬 Contact
+```bash
+npm run dev
+```
 
-For any questions or feedback, feel free to reach out via email: `sanmitra.mukherjee15@.com`  
-Or open an issue on the GitHub repository.
+The app will be available at `http://localhost:3000`
+
+## 🎯 Usage
+
+1. **Register/Login** - Create an account or login
+2. **Browse Books** - View available books on the Buy page
+3. **Sell Books** - List your books with images and details
+4. **Purchase Books** - Buy books with dummy payment simulation
+5. **View History** - Check your purchase history
+
+## 🎨 Design Features
+
+- **Dark Theme** - Easy on the eyes
+- **Glassmorphism** - Modern frosted glass effects
+- **Gradient Accents** - Vibrant color gradients
+- **Smooth Animations** - Fade-ins, hover effects, and transitions
+- **Custom Components** - Reusable, styled components
+- **Responsive Layout** - Mobile-first design
+
+## 📁 Project Structure
+
+```
+SellnBuyBooks/
+├── backend/
+│   ├── models/          # MongoDB models
+│   ├── routes/          # API routes
+│   ├── middleware/      # Auth middleware
+│   ├── public/          # Old HTML files (deprecated)
+│   ├── uploads/         # Uploaded images
+│   └── server.js        # Express server
+├── frontend/
+│   ├── src/
+│   │   ├── components/  # React components
+│   │   ├── pages/       # Page components
+│   │   ├── context/     # Auth context
+│   │   ├── utils/       # API utilities
+│   │   └── App.jsx      # Main app component
+│   ├── index.html
+│   └── vite.config.js
+└── README.md
+```
+
+## 🔧 Troubleshooting
+
+### PowerShell Script Execution Error
+
+If you see "running scripts is disabled", run PowerShell as Administrator:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Port Already in Use
+
+If port 5000 or 3000 is in use, change the port in:
+- Backend: `.env` file
+- Frontend: `vite.config.js`
+
+### MongoDB Connection Error
+
+Ensure MongoDB is running and the connection string in `.env` is correct.
+
+## 🎉 What's New
+
+### Backend Fixes
+- ✅ Added missing fields to Book model (description, condition, purchaseDate, info, phone, isSold)
+- ✅ Fixed form field mapping between frontend and backend
+- ✅ Implemented 3-second dummy payment simulation
+- ✅ Added sold status tracking
+- ✅ Prevented duplicate purchases
+- ✅ Better error messages
+
+### Frontend Overhaul
+- ✅ Complete React + Vite rebuild
+- ✅ Modern design system with CSS variables
+- ✅ Glassmorphism and gradient effects
+- ✅ Image upload with live preview
+- ✅ Book details modal
+- ✅ Loading states and animations
+- ✅ Responsive layout
+- ✅ Protected routes with authentication
+
+## 📝 License
+
+MIT License

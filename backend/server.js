@@ -96,15 +96,16 @@ app.post('/api/books', authMiddleware, upload.single('image'), async (req, res) 
 
         const newBook = new Book({
             title,
-            description,
+            description: description || '',
             price,
-            author,
-            condition,
-            purchaseDate,
-            info,
-            phone,
+            author: author || 'Unknown',
+            condition: condition || 5,
+            purchaseDate: purchaseDate || null,
+            info: info || '',
+            phone: phone || '',
             image: req.file ? `/uploads/${req.file.filename}` : null,
-            seller: req.user.id   // ✅ now safe, req.user is defined
+            seller: req.user.id,
+            isSold: false
         });
 
         await newBook.save();
@@ -137,6 +138,6 @@ mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
-.catch(err => console.error(err));
+    .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
+    .catch(err => console.error(err));
 
