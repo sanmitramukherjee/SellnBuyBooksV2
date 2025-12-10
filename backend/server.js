@@ -39,8 +39,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Make uploads folder public
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -127,10 +126,7 @@ app.get('/api/books', async (req, res) => {
     }
 });
 
-// ✅ Serve login page by default
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
-});
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
