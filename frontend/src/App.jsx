@@ -29,10 +29,10 @@ const AppRoutes = () => {
 
     return (
         <BrowserRouter>
-            {user && <Navbar />}
+            <Navbar />
             <Routes>
                 <Route path="/login" element={user ? <Navigate to="/buy" /> : <Login />} />
-                <Route path="/buy" element={<PrivateRoute><Buy /></PrivateRoute>} />
+                <Route path="/buy" element={<Buy />} />
                 <Route path="/sell" element={<PrivateRoute><Sell /></PrivateRoute>} />
                 <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
                 <Route path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />

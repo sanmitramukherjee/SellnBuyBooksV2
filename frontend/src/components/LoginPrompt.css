@@ -1,0 +1,128 @@
+.login-prompt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.login-prompt-content {
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    animation: slideUp 0.3s ease-out;
+}
+
+.login-prompt-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-prompt-close:hover {
+    background: var(--danger);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.login-prompt-body {
+    text-align: center;
+}
+
+.login-prompt-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    animation: bounce 0.6s ease-out;
+}
+
+.login-prompt-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-prompt-message {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.login-prompt-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .login-prompt-content {
+        padding: var(--spacing-lg);
+    }
+
+    .login-prompt-title {
+        font-size: 1.5rem;
+    }
+
+    .login-prompt-message {
+        font-size: 1rem;
+    }
+}

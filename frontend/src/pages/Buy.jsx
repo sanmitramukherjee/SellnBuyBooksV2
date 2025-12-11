@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { booksAPI } from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import BookCard from '../components/BookCard';
+import LoginPrompt from '../components/LoginPrompt';
 import './Buy.css';
 
 const FeaturedCarousel = ({ books }) => {
@@ -73,10 +75,12 @@ const FeaturedCarousel = ({ books }) => {
 };
 
 const Buy = () => {
+    const { user } = useAuth();
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
     useEffect(() => {
         loadBooks();
@@ -91,6 +95,20 @@ const Buy = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSearchClick = () => {
+        if (!user) {
+            setShowLoginPrompt(true);
+        }
+    };
+
+    const handleSearchChange = (e) => {
+        if (!user) {
+            setShowLoginPrompt(true);
+            return;
+        }
+        setSearchQuery(e.target.value);
     };
 
     const filteredBooks = books.filter(book => {
@@ -138,7 +156,10 @@ const Buy = () => {
                             type="text"
                             placeholder="Search by title, author, or description..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={handleSearchChange}
+                            onClick={handleSearchClick}
+                            onFocus={handleSearchClick}
+                            readOnly={!user}
                             className="search-input"
                         />
                         {searchQuery && (
@@ -194,12 +215,22 @@ const Buy = () => {
                                 style={{ animationDelay: `${index * 0.05}s` }}
                                 className="fade-in"
                             >
-                                <BookCard book={book} onPurchaseSuccess={loadBooks} />
+                                <BookCard
+                                    book={book}
+                                    onPurchaseSuccess={loadBooks}
+                                    isAuthenticated={!!user}
+                                    onLoginRequired={() => setShowLoginPrompt(true)}
+                                />
                             </div>
                         ))}
                     </div>
                 )}
             </div>
+
+            <LoginPrompt
+                isOpen={showLoginPrompt}
+                onClose={() => setShowLoginPrompt(false)}
+            />
         </div>
     );
 };

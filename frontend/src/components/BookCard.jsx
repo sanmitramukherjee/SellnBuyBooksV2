@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { purchaseAPI } from '../utils/api';
 import './BookCard.css';
 
-const BookCard = ({ book, onPurchaseSuccess }) => {
+const BookCard = ({ book, onPurchaseSuccess, isAuthenticated = true, onLoginRequired }) => {
     const [loading, setLoading] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
 
     const handleBuy = async () => {
+        if (!isAuthenticated) {
+            if (onLoginRequired) onLoginRequired();
+            return;
+        }
+
         if (book.isSold) return;
 
         setLoading(true);
@@ -21,9 +26,23 @@ const BookCard = ({ book, onPurchaseSuccess }) => {
         }
     };
 
+    const handleDetailsClick = () => {
+        if (!isAuthenticated) {
+            if (onLoginRequired) onLoginRequired();
+            return;
+        }
+        setShowDetails(true);
+    };
+
+    const handleCardClick = () => {
+        if (!isAuthenticated) {
+            if (onLoginRequired) onLoginRequired();
+        }
+    };
+
     return (
         <>
-            <div className="book-card card">
+            <div className="book-card card" onClick={handleCardClick} style={{ cursor: isAuthenticated ? 'default' : 'pointer' }}>
                 <div className="book-image-container">
                     <img
                         src={book.image || '/placeholder-book.jpg'}
@@ -57,13 +76,19 @@ const BookCard = ({ book, onPurchaseSuccess }) => {
                         <span className="book-price">₹{book.price}</span>
                         <div className="book-actions">
                             <button
-                                onClick={() => setShowDetails(true)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDetailsClick();
+                                }}
                                 className="btn btn-outline btn-sm"
                             >
                                 Details
                             </button>
                             <button
-                                onClick={handleBuy}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleBuy();
+                                }}
                                 disabled={loading || book.isSold}
                                 className="btn btn-primary btn-sm"
                             >

@@ -25,21 +25,34 @@ const Navbar = () => {
                     <Link to="/buy" className="nav-link">
                         Buy
                     </Link>
-                    <Link to="/sell" className="nav-link">
-                        Sell
-                    </Link>
-                    <Link to="/history" className="nav-link">
-                        History
-                    </Link>
-                    <Link to="/account" className="nav-link">
-                        Account
-                    </Link>
-                    <button onClick={toggleTheme} className="theme-toggle" title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
-                    <button onClick={handleLogout} className="btn btn-outline btn-sm">
-                        Logout
-                    </button>
+                    {user ? (
+                        <>
+                            <Link to="/sell" className="nav-link">
+                                Sell
+                            </Link>
+                            <Link to="/history" className="nav-link">
+                                History
+                            </Link>
+                            <Link to="/account" className="nav-link">
+                                Account
+                            </Link>
+                            <button onClick={toggleTheme} className="theme-toggle" title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+                                {theme === 'dark' ? '☀️' : '🌙'}
+                            </button>
+                            <button onClick={handleLogout} className="btn btn-outline btn-sm">
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button onClick={toggleTheme} className="theme-toggle" title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+                                {theme === 'dark' ? '☀️' : '🌙'}
+                            </button>
+                            <Link to="/login" className="btn btn-primary btn-sm">
+                                Login
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
